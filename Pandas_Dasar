@@ -1,0 +1,215 @@
+Menginstall Pandas
+Pandas secara default tidak tersedia pada modul standar disaat pertama kali instalasi Python dan kita diharuskan untuk melakukan instalasi terlebih dahulu sebelum menggunakan. Untuk dapat menginstall Pandas, kita bisa menjalankan perintah:
+
+pip install pandas
+
+Atau dengan menggunakan Anaconda, kita bisa menginstallnya dengan perintah berikut:
+
+conda install pandas
+
+Menggunakan Pandas
+Sebelum kita mulai, mari kita import terlebih dahulu library pandas. Kita melakukan import pandas as pd untuk mempermudah penulisan, sehingga kita dapat menulis pd sebagai alias dari pandas
+
+# Import library pandas
+import pandas as pd
+
+Struktur Data di Pandas
+Pandas memiliki dua tipe struktur data:
+
+Series
+DataFrame
+Series
+Series merupakan struktur data dasar dalam Pandas. Series bisa juga diibaratkan sebagai array satu dimensi yang mempunyai index sehingga kita dapat mengontrol index dari setiap elemen tersebut. Tipe data yang bisa ditampung berupa integer, float, dan juga string.
+
+DataFrame
+DataFrame merupakan array dua dimensi dengan baris dan kolom. Struktur data ini merupakan cara paling standar untuk menyimpan data. Setiap kolom pada DataFrame merupakan objek dari Series, dan baris terdiri dari elemen yang ada pada Series. Baris berguna untuk menyimpan informasi dan kolom untuk menyimpan nama dari informasi tersebut.
+
+Sebagai contoh, berikut adalah perbandingan antara Series dan DataFrame : (ada di web : https://notebooks.githubusercontent.com/view/ipynb?browser=unknown_browser&color_mode=auto&commit=3a3d9a50fc0b07e959235d3f2360e183eae75e9e&device=unknown_device&enc_url=68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f7269636861726463737577616e64692f707073642d636f64696e672d776f726b73686f702f336133643961353066633062303765393539323335643366323336306531383365616537356539652f64656d6f2e6970796e62&logged_in=false&nwo=richardcsuwandi%2Fppsd-coding-workshop&path=demo.ipynb&platform=unknown_platform&repository_id=326684206&repository_type=Repository&version=0)
+
+Membuat Series di Pandas
+Series pada Pandas bisa dibuat dengan menggunakan fungsi pd.Series. Kita bisa menggunakan Python list ataupun NumPy array sebagai data untuk membuat Series. Berbeda dengan Python list, Series hanya dapat berisi data dengan tipe yang sama
+
+# Series dengan data
+data = ["a", "b", "c", "d", "e"]
+series = pd.Series(data)
+series
+0    a
+1    b
+2    c
+3    d
+4    e
+dtype: object
+Kita bisa mengakses data pada Series menggunakan indeks seperti halnya pada Python list
+
+# Akses data dengan indeks
+series[0]
+'a'
+Seperti halnya Python list, Pandas juga mendukung operasi slicing dengan format start:stop:step
+
+# Data dari indeks 0 hingga 4 dengan step 2
+series[0:4:2]
+0    a
+2    c
+dtype: object
+# Data dari indeks ke-2 dan setelahnya
+series[2:]
+2    c
+3    d
+4    e
+dtype: object
+# Data sebelum indeks ke-3
+series[:3]
+0    a
+1    b
+2    c
+dtype: object
+Untuk menampilkan data dengan indeks berbeda, kita bisa menggunakan multi-indexing
+
+# Data pada indeks 0 dan 3
+series[[0, 3]]
+0    a
+3    d
+dtype: object
+
+Membuat DataFrame di Pandas
+DataFrame pada Pandas bisa dibuat dengan menggunakan method pd.DataFrame. Kita bisa menggunakan Python dictionary sebagai data untuk membuat DataFrame
+
+# Membuat DataFrame
+data = {"Negara": ["Indonesia", "Jepang", "India", "China"],
+        "Ibukota": ["Jakarta", "Tokyo", "New Delhi", "Beijing"]}
+df = pd.DataFrame(data)
+df
+Negara	Ibukota
+0	Indonesia	Jakarta
+1	Jepang	Tokyo
+2	India	New Delhi
+3	China	Beijing
+
+Latihan
+Gunakan Pandas DataFrame untuk membuat tabel seperi berikut:
+
+Nama	Usia	Jenis Kelamin
+John	20	Laki-Laki
+Emily	18	Perempuan
+Anna	17	Perempuan
+Kevin	21	Laki-Laki
+# Jawaban:
+data = {"Nama": ["John", "Emily", "Anna", "Kevin"],
+        "Usia": [20, 18, 17, 21],
+        "Jenis Kelamin": ["Laki-Laki", "Perempuan", "Perempuan", "Laki-Laki"]}
+
+df = pd.DataFrame(data)
+df
+Nama	Usia	Jenis Kelamin
+0	John	20	Laki-Laki
+1	Emily	18	Perempuan
+2	Anna	17	Perempuan
+3	Kevin	21	Laki-Laki
+
+Membaca Data di Pandas
+Kita dapat membaca file dengan menggunakan fungsi pd.read_<file type>. Sebagai contoh, untuk membaca file .csv kita dapat menggunakan fungsi pd.read_csv
+
+Baca lebih lanjut: https://pandas.pydata.org/pandas-docs/stable/reference/io.html
+
+Kita akan menggunakan data Titanic dari Kaggle, yang berisi informasi mengenai penumpang kapal Titanic.
+
+Data juga bisa di download melalui GitHub repository untuk coding workshop ini disini
+
+  # Membaca data
+url = "https://raw.githubusercontent.com/richardcsuwandi/ppsd-coding-workshop/main/titanic.csv"
+df = pd.read_csv(url)
+df
+PassengerId	Name	Pclass	Sex	Age	SibSp	Parch	Ticket	Fare	Cabin	Embarked	Survived
+0	1	Braund, Mr. Owen Harris	3	male	22.0	1	0	A/5 21171	7.2500	NaN	S	0
+1	2	Cumings, Mrs. John Bradley (Florence Briggs Th...	1	female	38.0	1	0	PC 17599	71.2833	C85	C	1
+2	3	Heikkinen, Miss. Laina	3	female	26.0	0	0	STON/O2. 3101282	7.9250	NaN	S	1
+3	4	Futrelle, Mrs. Jacques Heath (Lily May Peel)	1	female	35.0	1	0	113803	53.1000	C123	S	1
+4	5	Allen, Mr. William Henry	3	male	35.0	0	0	373450	8.0500	NaN	S	0
+...	...	...	...	...	...	...	...	...	...	...	...	...
+886	887	Montvila, Rev. Juozas	2	male	27.0	0	0	211536	13.0000	NaN	S	0
+887	888	Graham, Miss. Margaret Edith	1	female	19.0	0	0	112053	30.0000	B42	S	1
+888	889	Johnston, Miss. Catherine Helen "Carrie"	3	female	NaN	1	2	W./C. 6607	23.4500	NaN	S	0
+889	890	Behr, Mr. Karl Howell	1	male	26.0	0	0	111369	30.0000	C148	C	1
+890	891	Dooley, Mr. Patrick	3	male	32.0	0	0	370376	7.7500	NaN	Q	0
+891 rows × 12 columns
+
+Melihat Data
+Berikut adalah beberapa fungsi dasar untuk melihat data di Pandas:
+
+head(n) : Berfungsi untuk melihat data sebanyak n pada baris awal (jika tidak diisi, secara default n = 5).
+tail(n) : Berfungsi untuk melihat data sebanyak n pada baris akhir (jika tidak diisi, secara default n = 5).
+shape : Melihat jumlah baris dan kolom.
+info() : Menampilkan nomor index beserta tipe datanya.
+describe() : Menunjukkan rangkuman statistik seperti rata-rata, median, dll pada kolom.
+
+# Menggunakan head
+df.head(n=3)
+
+# Menggunakan tail
+df.tail(n=3)
+
+# Menggunakan shape
+n_baris, n_kolom = df.shape
+n_kolom
+
+# Menggunakan info
+df.info()
+
+# Menggunakan describe
+df.describe()
+
+Memilih Baris dan Kolom
+Terdapat dua metode untuk memilih baris dan kolom di Pandas, yaitu menggunakan iloc dan loc. Secara singkat, iloc memilih data berdasarkan indeks/posisi nya, sedangkan loc memilih data berdasarkan dengan labelnya.
+
+iloc
+Kita dapat memilih baris dan kolom dengan iloc menggunakan syntax seperti berikut:
+
+df.iloc[indeks baris, indeks kolom]
+
+
+# Memilih baris dan kolom menggunakan iloc
+df.iloc[2, 1]
+
+# Memilih baris menggunakan iloc
+df.iloc[0]
+
+# Memilih kolom menggunakan iloc
+df.iloc[:, 1]
+
+# Memilih beberapa baris dan kolom menggunakan iloc
+df.iloc[0:5, [1, 3, 4, 7]]
+
+loc
+Kita dapat memilih baris dan kolom dengan loc menggunakan syntax seperti berikut:
+
+df.loc[indeks baris, nama kolom]
+
+# Memilih baris dan kolom menggunakan loc
+df.loc[0, "Name"]
+
+# Memilih kolom menggunakan loc
+df.loc[:, "Name"]
+
+# Memilih beberapa baris dan kolom menggunakan loc
+df.loc[0:4, ["Name", "Sex", "Age"]]
+
+Note:
+
+iloc menggunakan aturan indexing yang sama dengan Python dimana elemen pertama pada range diikutkan sedangkan elemen terakhir tidak diikutkan Sehingga untuk range 0:10, iloc akan memilih elemen 0,...,9.
+
+Sedangkan, loc mengikutsertakan elemen terakhir pada range sehingga untuk range 0:10 yang dipilih adalah elemen 0,...,10.
+
+Latihan
+Gunakan iloc atau loc untuk memilih 100 baris pertama dengan kolom Name, Age, Sex dan Survived
+
+# Jawaban:
+# Menggunakan loc
+df.loc[0:99, ["Name", "Age", "Sex", "Survived"]]
+
+# Jawaban:
+# Menggunakan iloc
+df.iloc[0:100, [1, 3, 4, 11]]
+
+
+
+
